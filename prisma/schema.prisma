@@ -18,3 +18,18 @@ model Post {
 
     @@index([name])
 }
+
+model Project {
+    id              String   @id @default(cuid())
+    title           String
+    description     String
+    link            String
+    imageUrl        String
+    farcasterUsername String
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+    approved        Boolean  @default(false)
+    
+    @@index([farcasterUsername])
+    @@index([approved])
+}
