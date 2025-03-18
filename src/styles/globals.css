@@ -48,3 +48,37 @@
     --ring: 270 67% 47%;
   }
 }
+
+/* UploadThing custom styles - simplified for better compatibility */
+.custom-upload {
+  width: 100%;
+}
+
+/* Basic styling for the button */
+.custom-upload button {
+  width: 100%;
+  padding: 8px !important;
+  font-size: 14px !important;
+  background-color: #9333EA !important;
+  color: white !important;
+  border-radius: 6px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Hover state */
+.custom-upload button:hover {
+  background-color: #7E22CE !important;
+}
+
+/* Hide the allowed content */
+.custom-upload [data-ut-element="allowed-content"] {
+  display: none !important;
+}
+
+/* Container styling */
+.custom-upload [data-ut-element="container"] {
+  padding: 0 !important;
+  margin: 0 !important;
+}

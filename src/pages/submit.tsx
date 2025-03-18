@@ -5,14 +5,14 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
-import { UploadButton } from "~/components/ui/upload-button";
+import { ImageUpload } from "~/components/ui/image-upload";
 import { api } from "~/utils/api";
 
 const projectSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters").max(100, "Title must be less than 100 characters"),
   description: z.string().min(10, "Description must be at least 10 characters").max(500, "Description must be less than 500 characters"),
-  link: z.string().min(1, "Link is required"),
-  farcasterUsername: z.string().min(1, "Farcaster username is required"),
+  link: z.string().url("Please enter a valid URL"),
+  farcasterUsername: z.string().optional(),
   imageUrl: z.string().url("Please upload an image"),
 });
 
@@ -23,8 +23,10 @@ export default function SubmitPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [uploadError, setUploadError] = useState("");
+  // This state is now handled inside the ImageUpload component
+  // const [isUploading, setIsUploading] = useState(false);
 
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<ProjectFormValues>({
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
       title: "",
@@ -62,7 +64,13 @@ export default function SubmitPage() {
     setUploadError("Error uploading image. Please try again.");
   };
 
-  const linkValue = watch("link");
+  const handleUploadStart = () => {
+    // Upload is starting, clear any previous errors
+    setUploadError("");
+  };
+
+  // We don't need to watch the link value, so we can remove this line
+  // const linkValue = watch("link");
 
   return (
     <>
@@ -148,18 +156,13 @@ export default function SubmitPage() {
                     {/* Link */}
                     <div>
                       <label htmlFor="link" className="block text-sm font-medium mb-1">Project Link</label>
-                      <div className="flex">
-                        <div className="bg-gray-100 dark:bg-gray-600 px-3 py-2 rounded-l-md border border-r-0 dark:border-gray-500 flex items-center">
-                          <p className="text-gray-700 dark:text-gray-300">https://warpcast.com/</p>
-                        </div>
-                        <input
-                          id="link"
-                          type="text"
-                          className="flex-grow px-4 py-2 rounded-r-md border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                          placeholder="~/channel/your-project"
-                          {...register("link")}
-                        />
-                      </div>
+                      <input
+                        id="link"
+                        type="text"
+                        className="w-full px-4 py-2 rounded-md border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        placeholder="https://your-project-link.com"
+                        {...register("link")}
+                      />
                       {errors.link && (
                         <p className="text-red-500 text-sm mt-1">{errors.link.message}</p>
                       )}
@@ -167,14 +170,19 @@ export default function SubmitPage() {
 
                     {/* Farcaster Username */}
                     <div>
-                      <label htmlFor="farcasterUsername" className="block text-sm font-medium mb-1">Farcaster Username</label>
-                      <input
-                        id="farcasterUsername"
-                        type="text"
-                        className="w-full px-4 py-2 rounded-md border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                        placeholder="Your Farcaster username"
-                        {...register("farcasterUsername")}
-                      />
+                      <label htmlFor="farcasterUsername" className="block text-sm font-medium mb-1">Farcaster Username <span className="text-gray-500 text-xs">(optional)</span></label>
+                      <div className="flex">
+                        <div className="bg-gray-100 dark:bg-gray-600 px-3 py-2 rounded-l-md border border-r-0 dark:border-gray-500 flex items-center">
+                          <p className="text-gray-700 dark:text-gray-300">https://warpcast.com/</p>
+                        </div>
+                        <input
+                          id="farcasterUsername"
+                          type="text"
+                          className="flex-grow px-4 py-2 rounded-r-md border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          placeholder="username"
+                          {...register("farcasterUsername")}
+                        />
+                      </div>
                       {errors.farcasterUsername && (
                         <p className="text-red-500 text-sm mt-1">{errors.farcasterUsername.message}</p>
                       )}
@@ -208,13 +216,18 @@ export default function SubmitPage() {
                         </div>
                       ) : (
                         <div className="mb-4">
-                          <UploadButton
-                            onUploadComplete={handleUploadComplete}
-                            onUploadError={handleUploadError}
-                          />
-                          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                            Upload a screenshot or image related to your project (max 4MB)
-                          </p>
+                          <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-md p-3 flex flex-col items-center justify-center">
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                              Upload an image for your project (Max 4MB)
+                            </p>
+                            <div className="w-full max-w-[200px]">
+                              <ImageUpload
+                                onUploadComplete={handleUploadComplete}
+                                onUploadError={handleUploadError}
+                                onUploadStart={handleUploadStart}
+                              />
+                            </div>
+                          </div>
                           {uploadError && (
                             <p className="text-red-500 text-sm mt-1">{uploadError}</p>
                           )}

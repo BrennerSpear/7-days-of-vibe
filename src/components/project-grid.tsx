@@ -4,16 +4,6 @@ import { Card, CardContent } from "~/components/ui/card";
 export function ProjectGrid() {
   const { data: projects, isLoading, error } = api.project.getApproved.useQuery();
 
-  if (isLoading) {
-    return (
-      <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-6 backdrop-blur-sm border dark:border-gray-700">
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 dark:border-purple-400"></div>
-        </div>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-6 backdrop-blur-sm border dark:border-gray-700">
@@ -27,19 +17,44 @@ export function ProjectGrid() {
   if (!projects || projects.length === 0) {
     return (
       <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-6 backdrop-blur-sm border dark:border-gray-700">
-        <p className="text-center text-lg text-gray-600 dark:text-gray-300">
-          No projects have been submitted yet. <br />
-          Be the first to share your creation!
-        </p>
+        {isLoading ? (
+          <div className="flex justify-center items-center py-6">
+            <div className="animate-pulse flex space-x-4">
+              <div className="flex-1 space-y-4 py-1">
+                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mx-auto"></div>
+                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto"></div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p className="text-center text-lg text-gray-600 dark:text-gray-300">
+            No projects have been submitted yet. <br />
+            Be the first to share your creation!
+          </p>
+        )}
       </div>
     );
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {projects.map((project: any) => (
-        <ProjectCard key={project.id} project={project} />
-      ))}
+      {isLoading 
+        ? Array(4).fill(0).map((_, i) => (
+            <Card key={`skeleton-${i}`} className="bg-white/70 dark:bg-gray-800/70 overflow-hidden">
+              <div className="h-48 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+              <CardContent className="p-5">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4 animate-pulse"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        : projects.map((project: any) => (
+            <ProjectCard key={project.id} project={project} />
+          ))
+      }
     </div>
   );
 }
@@ -58,11 +73,15 @@ interface ProjectCardProps {
 function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="bg-white/70 dark:bg-gray-800/70 overflow-hidden">
-      <div className="h-48 overflow-hidden">
+      <div className="h-48 overflow-hidden relative">
         <img
           src={project.imageUrl}
           alt={project.title}
           className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+          onError={(e) => {
+            // If image fails to load, replace with placeholder
+            e.currentTarget.src = "https://placehold.co/600x400/9C6ADE/FFFFFF?text=Project+Image";
+          }}
         />
       </div>
       <CardContent className="p-5">
@@ -71,11 +90,20 @@ function ProjectCard({ project }: ProjectCardProps) {
           {project.description}
         </p>
         <div className="flex justify-between items-center">
-          <span className="text-sm text-purple-600 dark:text-purple-400">
-            @{project.farcasterUsername}
-          </span>
+          {project.farcasterUsername ? (
+            <a 
+              href={`https://warpcast.com/${project.farcasterUsername}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-purple-600 dark:text-purple-400 hover:underline"
+            >
+              @{project.farcasterUsername}
+            </a>
+          ) : (
+            <span className="text-sm text-gray-500">Anonymous</span>
+          )}
           <a
-            href={`https://warpcast.com/${project.link}`}
+            href={project.link}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-1 rounded-md text-sm font-medium"

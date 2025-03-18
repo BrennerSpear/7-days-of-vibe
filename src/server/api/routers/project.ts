@@ -9,7 +9,7 @@ export const projectRouter = createTRPCRouter({
         description: z.string().min(10).max(500),
         link: z.string().url(),
         imageUrl: z.string().url(),
-        farcasterUsername: z.string().min(1),
+        farcasterUsername: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -19,7 +19,7 @@ export const projectRouter = createTRPCRouter({
           description: input.description,
           link: input.link,
           imageUrl: input.imageUrl,
-          farcasterUsername: input.farcasterUsername,
+          farcasterUsername: input.farcasterUsername || "", // Provide empty string as default
         },
       });
     }),

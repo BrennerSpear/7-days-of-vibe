@@ -5,22 +5,14 @@ const f = createUploadthing();
 
 // Define file routes
 export const ourFileRouter = {
-  // Route for project image uploads
-  imageUploader: f({
-    image: {
-      maxFileSize: "4MB",
-      maxFileCount: 1
-    }
-  })
+  // Route for project image uploads - using a simpler configuration
+  imageUploader: f({ image: { maxFileSize: "4MB" } })
     .middleware(() => {
-      // This code runs on your server before upload
+      // Simple middleware that just returns a user ID
       return { userId: "anonymous" };
     })
     .onUploadComplete(({ file }) => {
-      // This code runs on your server after upload
-      console.log("Upload complete:", file.url);
-      
-      // Return the file URL for client use
+      // Just return the URL directly to simplify the response
       return { url: file.url };
     }),
 } satisfies FileRouter;
