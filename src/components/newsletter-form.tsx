@@ -6,10 +6,15 @@ const ConvertKitForm = dynamic(
 	() => import("convertkit-react").then((mod) => mod.default),
 	{
 		ssr: false,
+		loading: () => (
+			<div className="p-4 text-center">Loading subscription form...</div>
+		),
 	},
 );
 
-export function NewsletterForm() {
+// Main newsletter form component
+export default function NewsletterForm() {
+	// Inline the form configuration directly
 	return (
 		<Card className="max-w-xl mx-auto bg-white/50 dark:bg-gray-800/50">
 			<CardContent className="pt-6">
@@ -27,5 +32,3 @@ export function NewsletterForm() {
 		</Card>
 	);
 }
-
-export default NewsletterForm;
