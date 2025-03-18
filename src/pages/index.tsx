@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import NewsletterForm from "~/components/newsletter-form";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
+import { Button } from "~/components/ui/button";
 
 export default function Home() {
 	return (
@@ -114,6 +115,17 @@ export default function Home() {
 											Join the 7 Days of Vibe Farcaster Channel →
 										</a>
 									</div>
+									
+									<div className="flex justify-center my-10">
+										<Link href="/submit" className="w-full max-w-md">
+											<Button 
+												className="w-full py-8 px-12 text-2xl font-extrabold bg-primary hover:bg-primary/90 shadow-2xl transition-all hover:scale-105 rounded-xl border-2 border-primary/30"
+											>
+												Submit Your Project
+											</Button>
+										</Link>
+									</div>
+									
 									<NewsletterForm />
 								</div>
 							</div>
