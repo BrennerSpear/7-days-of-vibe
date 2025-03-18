@@ -26,3 +26,13 @@ model Project {
     @@index([farcasterUsername])
     @@index([approved])
 }
+
+model Subscriber {
+    id        String   @id @default(cuid())
+    firstName String
+    email     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([email])
+}
