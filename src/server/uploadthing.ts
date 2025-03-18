@@ -33,8 +33,12 @@ export const ourFileRouter = {
       // console.log("Upload complete for userId:", metadata?.userId || "anonymous");
       console.log("File details:", file);
       
+      // Use the string URL directly rather than the getter
+      const fileUrl = file.ufsUrl;
+      console.log("Sending URL to client:", fileUrl);
+      
       // Whatever is returned here is sent to the clientside callback
-      return { uploadedBy: "anonymous", url: file.ufsUrl};
+      return { uploadedBy: "anonymous", url: fileUrl };
     }),
 } satisfies FileRouter;
 

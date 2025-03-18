@@ -58,7 +58,8 @@ export default function SubmitPage() {
     name: string;
     size: number;
     key: string;
-    url: string;
+    uploadedBy?: string;
+    url?: string;
   }[];
 
   const handleUploadComplete = (res: UploadResponse) => {
