@@ -34,12 +34,12 @@ export function ImageUpload({ onUploadComplete, onUploadError, onUploadStart }: 
 
       // Check if upload was successful
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Error uploading file');
+        const errorData = await response.json() as { error?: string };
+        throw new Error(errorData.error ?? 'Error uploading file');
       }
 
       // Get the URL of the uploaded file
-      const data = await response.json();
+      const data = await response.json() as { url: string };
       onUploadComplete(data.url);
     } catch (error) {
       console.error('Upload error:', error);

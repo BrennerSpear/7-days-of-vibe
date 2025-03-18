@@ -19,7 +19,7 @@ export const projectRouter = createTRPCRouter({
           description: input.description,
           link: input.link,
           imageUrl: input.imageUrl,
-          farcasterUsername: input.farcasterUsername || "", // Provide empty string as default
+          farcasterUsername: input.farcasterUsername ?? "", // Provide empty string as default
         },
       });
     }),

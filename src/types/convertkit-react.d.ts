@@ -5,7 +5,7 @@ declare module 'convertkit-react' {
     className?: string;
     newTab?: boolean;
     buttonBackground?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }
 
   const ConvertKitForm: React.FC<ConvertKitFormProps>;

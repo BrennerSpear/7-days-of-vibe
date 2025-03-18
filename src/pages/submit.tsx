@@ -215,6 +215,7 @@ export default function SubmitPage() {
                       {imageUrl ? (
                         <div className="mb-4">
                           <div className="relative w-full h-48 rounded-md overflow-hidden">
+                            {/* Using img element for preview in form */}
                             <img 
                               src={imageUrl} 
                               alt="Project Preview" 

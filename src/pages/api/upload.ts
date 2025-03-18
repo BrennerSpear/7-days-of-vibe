@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -32,9 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       maxFileSize: 4 * 1024 * 1024, // 4MB limit
     });
 
-    const [fields, files] = await new Promise<[formidable.Fields, formidable.Files]>((resolve, reject) => {
+    const [, files] = await new Promise<[formidable.Fields, formidable.Files]>((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
-        if (err) reject(err);
+        if (err) reject(new Error(String(err)));
         resolve([fields, files]);
       });
     });
@@ -53,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const uniqueId = crypto.randomBytes(8).toString('hex');
     // Safely get file details with type checking
     const fileName = `${uniqueId}.jpg`; // Default extension
-    const filePath = (file as any).filepath || '';
+    const filePath = (file as { filepath?: string }).filepath ?? '';
     
     // Create the final path
     const finalPath = path.join(uploadsDir, fileName);

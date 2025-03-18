@@ -51,7 +51,7 @@ export function ProjectGrid() {
               </CardContent>
             </Card>
           ))
-        : projects.map((project: any) => (
+        : projects.map((project: ProjectCardProps['project']) => (
             <ProjectCard key={project.id} project={project} />
           ))
       }
@@ -74,6 +74,7 @@ function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="bg-white/70 dark:bg-gray-800/70 overflow-hidden">
       <div className="h-48 overflow-hidden relative">
+        {/* Using img element as it's part of a custom card component */}
         <img
           src={project.imageUrl}
           alt={project.title}
