@@ -1,19 +1,40 @@
-import { createUploadthing, type FileRouter } from "uploadthing/next";
+// import type { NextApiRequest, NextApiResponse } from "next";
+import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
+// import { UploadThingError } from "uploadthing/server";
 
 // Create new instance of uploadthing
 const f = createUploadthing();
 
-// Define file routes
+// Simple auth function (no actual auth required for this demo)
+// const auth = (req: NextApiRequest, res: NextApiResponse) => ({ id: "anonymous" });
+
+// FileRouter for your app
 export const ourFileRouter = {
-  // Route for project image uploads - using a simpler configuration
-  imageUploader: f({ image: { maxFileSize: "4MB" } })
-    .middleware(() => {
-      // Simple middleware that just returns a user ID
-      return { userId: "anonymous" };
-    })
-    .onUploadComplete(({ file }) => {
-      // Just return the URL directly to simplify the response
-      return { url: file.url };
+  // Route for project image uploads
+  imageUploader: f({
+    image: { 
+      maxFileSize: "4MB",
+      maxFileCount: 1 
+    } 
+  })
+    // Set permissions and file types for this FileRoute
+    // .middleware(async ({ req, res }) => {
+    //   // This code runs on your server before upload
+    //   const user = await auth(req, res);
+    //   console.log("Upload middleware executed for user:", user.id);
+      
+    //   // Whatever is returned here is accessible in onUploadComplete as `metadata`
+    //   return { userId: user.id };
+    // })
+    // This function runs on the server after upload
+    .onUploadComplete(async ({ metadata, file }) => {
+      // This code RUNS ON YOUR SERVER after upload
+      console.log("metadata:", metadata);
+      // console.log("Upload complete for userId:", metadata?.userId || "anonymous");
+      console.log("File details:", file);
+      
+      // Whatever is returned here is sent to the clientside callback
+      return { uploadedBy: "anonymous", url: file.ufsUrl};
     }),
 } satisfies FileRouter;
 

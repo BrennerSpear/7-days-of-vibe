@@ -5,8 +5,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
-import { ImageUpload } from "~/components/ui/image-upload";
 import { api } from "~/utils/api";
+import { UploadButton } from "~/utils/uploadthing";
 
 const projectSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters").max(100, "Title must be less than 100 characters"),
@@ -53,10 +53,29 @@ export default function SubmitPage() {
     createProject.mutate(data);
   };
 
-  const handleUploadComplete = (url: string) => {
-    setImageUrl(url);
-    setValue("imageUrl", url);
-    setUploadError("");
+  // Type for the upload response
+  type UploadResponse = {
+    name: string;
+    size: number;
+    key: string;
+    url: string;
+  }[];
+
+  const handleUploadComplete = (res: UploadResponse) => {
+    console.log("Upload response received:", JSON.stringify(res));
+    try {
+      if (res && Array.isArray(res) && res.length > 0 && res[0]?.url) {
+        setImageUrl(res[0].url);
+        setValue("imageUrl", res[0].url);
+        setUploadError("");
+      } else {
+        console.error("Invalid upload response format:", res);
+        setUploadError("Failed to get upload URL. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error processing upload response:", error);
+      setUploadError("Error processing upload. Please try again.");
+    }
   };
 
   const handleUploadError = (error: Error) => {
@@ -221,10 +240,18 @@ export default function SubmitPage() {
                               Upload an image for your project (Max 4MB)
                             </p>
                             <div className="w-full max-w-[200px]">
-                              <ImageUpload
-                                onUploadComplete={handleUploadComplete}
-                                onUploadError={handleUploadError}
-                                onUploadStart={handleUploadStart}
+                              <UploadButton
+                                endpoint="imageUploader"
+                                onClientUploadComplete={(res) => {
+                                  console.log("Upload completed:", res);
+                                  handleUploadComplete(res);
+                                }}
+                                onUploadError={(error) => {
+                                  console.error("Upload error details:", error);
+                                  handleUploadError(error);
+                                }}
+                                onUploadBegin={handleUploadStart}
+                                className="ut-button:bg-purple-600 ut-button:hover:bg-purple-700 ut-button:text-white"
                               />
                             </div>
                           </div>
