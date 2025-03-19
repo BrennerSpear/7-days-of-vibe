@@ -4,7 +4,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ThemeToggle } from "~/components/ui/theme-toggle";
+import { NavBar } from "~/components/nav-bar";
 import { api } from "~/utils/api";
 import { UploadButton } from "~/utils/uploadthing";
 
@@ -101,22 +101,7 @@ export default function SubmitPage() {
       </Head>
 
       <div className="min-h-screen flex flex-col">
-        {/* Navigation */}
-        <nav className="fixed top-0 right-0 left-0 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm z-50 border-b dark:border-gray-800">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-between py-4">
-              <div className="flex items-center gap-6">
-                <Link
-                  href="/"
-                  className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
-                >
-                  ← Back to Home
-                </Link>
-                <ThemeToggle />
-              </div>
-            </div>
-          </div>
-        </nav>
+        <NavBar />
 
         {/* Main Content */}
         <main className="flex-grow pt-24">

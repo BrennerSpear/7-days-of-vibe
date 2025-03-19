@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
 import NewsletterForm from "~/components/newsletter-form";
-import { ThemeToggle } from "~/components/ui/theme-toggle";
 import { Button } from "~/components/ui/button";
+import { NavBar } from "~/components/nav-bar";
 
 export default function Home() {
 	return (
@@ -17,38 +17,7 @@ export default function Home() {
 			</Head>
 
 			<div className="min-h-screen flex flex-col">
-				{/* Navigation */}
-				<nav className="fixed top-0 right-0 left-0 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm z-50 border-b dark:border-gray-800">
-					<div className="container mx-auto px-4">
-						<div className="flex justify-between py-4">
-							<div className="flex items-center">
-								<ThemeToggle />
-							</div>
-							<div className="flex gap-8 items-center">
-								<a
-									href="https://warpcast.com/~/channel/vibes"
-									target="_blank"
-									rel="noreferrer"
-									className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
-								>
-									FC Channel
-								</a>
-								<Link
-									href="/submit"
-									className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
-								>
-									Submit Project
-								</Link>
-								<Link
-									href="/showcase"
-									className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
-								>
-									Community Projects
-								</Link>
-							</div>
-						</div>
-					</div>
-				</nav>
+				<NavBar />
 
 				{/* Main Content */}
 				<main className="flex-grow">

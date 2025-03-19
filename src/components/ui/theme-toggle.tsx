@@ -21,7 +21,7 @@ export function ThemeToggle() {
       aria-label="Toggle dark mode"
     >
       {theme === "dark" ? (
-        <SunIcon className="h-5 w-5 text-yellow-300" />
+        <SunIcon className="h-5 w-5 text-gray-300" />
       ) : (
         <MoonIcon className="h-5 w-5 text-gray-600" />
       )}
