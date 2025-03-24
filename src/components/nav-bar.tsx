@@ -8,8 +8,9 @@ export function NavBar() {
 
   // Function to determine if a link is active
   const isActive = (path: string) => {
-    return currentPath === path ? "text-purple-800 dark:text-purple-200 font-semibold" : 
-      "text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300";
+    return currentPath === path
+      ? "text-purple-800 dark:text-purple-200 font-semibold"
+      : "text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300";
   };
 
   return (
@@ -30,28 +31,16 @@ export function NavBar() {
             >
               FC Channel
             </a>
-            <Link
-              href="/submit"
-              className={`text-sm font-medium ${isActive("/submit")}`}
-            >
+            <Link href="/submit" className={`text-sm font-medium ${isActive("/submit")}`}>
               Submit Project
             </Link>
-            <Link
-              href="/showcase"
-              className={`text-sm font-medium ${isActive("/showcase")}`}
-            >
+            <Link href="/showcase" className={`text-sm font-medium ${isActive("/showcase")}`}>
               Community Projects
             </Link>
-            <Link
-              href="/tools"
-              className={`text-sm font-medium ${isActive("/tools")}`}
-            >
+            <Link href="/tools" className={`text-sm font-medium ${isActive("/tools")}`}>
               Vibe Tools
             </Link>
-            <Link
-              href="/prompts"
-              className={`text-sm font-medium ${isActive("/prompts")}`}
-            >
+            <Link href="/prompts" className={`text-sm font-medium ${isActive("/prompts")}`}>
               Prompt Ideas
             </Link>
             <ThemeToggle />

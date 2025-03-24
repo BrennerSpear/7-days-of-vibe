@@ -8,10 +8,13 @@ export default function Showcase() {
     <>
       <Head>
         <title>Community Projects - 7 Days of Vibe Coding</title>
-        <meta name="description" content="Check out projects built during the 7 Days of Vibe Coding challenge." />
+        <meta
+          name="description"
+          content="Check out projects built during the 7 Days of Vibe Coding challenge."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <div className="min-h-screen flex flex-col">
         <NavBar />
 
@@ -22,7 +25,7 @@ export default function Showcase() {
               <h1 className="text-4xl font-bold mb-12 text-center bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-300 dark:to-pink-300 bg-clip-text text-transparent">
                 Community Projects
               </h1>
-              
+
               <div className="grid gap-8">
                 <ProjectGrid />
               </div>

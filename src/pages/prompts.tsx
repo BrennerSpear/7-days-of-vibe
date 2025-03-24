@@ -13,10 +13,13 @@ const PromptsPage: NextPage = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  
+
   const handlePromptSubmitSuccess = () => {
     closeModal();
-    showToast("Your prompt idea has been submitted successfully! It will be reviewed before appearing on the site.", "success");
+    showToast(
+      "Your prompt idea has been submitted successfully! It will be reviewed before appearing on the site.",
+      "success"
+    );
   };
 
   return (
@@ -39,14 +42,14 @@ const PromptsPage: NextPage = () => {
             Submit a Prompt Idea
           </Button>
         </div>
-        
+
         <div className="mb-12">
           <PromptsList />
         </div>
-        
-        <PromptModal 
-          isOpen={isModalOpen} 
-          onClose={closeModal} 
+
+        <PromptModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
           onSubmitSuccess={handlePromptSubmitSuccess}
         />
         <ToastContainer />

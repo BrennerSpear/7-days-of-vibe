@@ -1,5 +1,5 @@
-import { api } from "~/utils/api";
 import { Card, CardContent } from "~/components/ui/card";
+import { api } from "~/utils/api";
 
 export function ProjectGrid() {
   const { data: projects, isLoading, error } = api.project.getApproved.useQuery();
@@ -21,8 +21,8 @@ export function ProjectGrid() {
           <div className="flex justify-center items-center py-6">
             <div className="animate-pulse flex space-x-4">
               <div className="flex-1 space-y-4 py-1">
-                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mx-auto"></div>
-                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto"></div>
+                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mx-auto" />
+                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto" />
               </div>
             </div>
           </div>
@@ -38,23 +38,27 @@ export function ProjectGrid() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {isLoading 
-        ? Array(4).fill(0).map((_, i) => (
-            <Card key={`skeleton-${i}`} className="bg-white/70 dark:bg-gray-800/70 overflow-hidden">
-              <div className="h-48 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
-              <CardContent className="p-5">
-                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4 animate-pulse"></div>
-                <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full animate-pulse"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse"></div>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        : projects.map((project: ProjectCardProps['project']) => (
+      {isLoading
+        ? Array(4)
+            .fill(0)
+            .map((_, i) => (
+              <Card
+                key={`skeleton-${i}`}
+                className="bg-white/70 dark:bg-gray-800/70 overflow-hidden"
+              >
+                <div className="h-48 bg-gray-200 dark:bg-gray-700 animate-pulse" />
+                <CardContent className="p-5">
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4 animate-pulse" />
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full animate-pulse" />
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 animate-pulse" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+        : projects.map((project: ProjectCardProps["project"]) => (
             <ProjectCard key={project.id} project={project} />
-          ))
-      }
+          ))}
     </div>
   );
 }
@@ -87,12 +91,10 @@ function ProjectCard({ project }: ProjectCardProps) {
       </div>
       <CardContent className="p-5">
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className="text-muted-foreground mb-4 text-sm line-clamp-3">
-          {project.description}
-        </p>
+        <p className="text-muted-foreground mb-4 text-sm line-clamp-3">{project.description}</p>
         <div className="flex justify-between items-center">
           {project.farcasterUsername ? (
-            <a 
+            <a
               href={`https://warpcast.com/${project.farcasterUsername}`}
               target="_blank"
               rel="noopener noreferrer"

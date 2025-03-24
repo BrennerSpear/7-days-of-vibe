@@ -1,6 +1,6 @@
 import { GeistSans } from "geist/font/sans";
-import { type AppType } from "next/app";
 import { ThemeProvider } from "next-themes";
+import type { AppType } from "next/app";
 
 import { api } from "~/utils/api";
 

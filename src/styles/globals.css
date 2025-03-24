@@ -51,7 +51,7 @@
 
 /* UploadThing custom styles */
 .ut-button {
-  background-color: #9333EA !important;
+  background-color: #9333ea !important;
   color: white !important;
   font-weight: 500 !important;
   padding: 8px 16px !important;
@@ -59,7 +59,7 @@
 }
 
 .ut-button:hover {
-  background-color: #7E22CE !important;
+  background-color: #7e22ce !important;
 }
 
 /* Make the upload icon smaller */

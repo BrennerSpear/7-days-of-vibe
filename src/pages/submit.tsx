@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Head from "next/head";
 import Link from "next/link";
-import { z } from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { NavBar } from "~/components/nav-bar";
 import { api } from "~/utils/api";
 import { UploadButton } from "~/utils/uploadthing";
 
 const projectSchema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters").max(100, "Title must be less than 100 characters"),
-  description: z.string().min(10, "Description must be at least 10 characters").max(500, "Description must be less than 500 characters"),
+  title: z
+    .string()
+    .min(3, "Title must be at least 3 characters")
+    .max(100, "Title must be less than 100 characters"),
+  description: z
+    .string()
+    .min(10, "Description must be at least 10 characters")
+    .max(500, "Description must be less than 500 characters"),
   link: z.string().url("Please enter a valid URL"),
   farcasterUsername: z.string().optional(),
   imageUrl: z.string().url("Please upload an image"),
@@ -26,7 +32,12 @@ export default function SubmitPage() {
   // This state is now handled inside the ImageUpload component
   // const [isUploading, setIsUploading] = useState(false);
 
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<ProjectFormValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
       title: "",
@@ -96,7 +107,10 @@ export default function SubmitPage() {
     <>
       <Head>
         <title>Submit Your Project - 7 Days of Vibe Coding</title>
-        <meta name="description" content="Submit your project for the 7 Days of Vibe Coding challenge" />
+        <meta
+          name="description"
+          content="Submit your project for the 7 Days of Vibe Coding challenge"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -113,8 +127,12 @@ export default function SubmitPage() {
 
               {isSuccess ? (
                 <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-8 backdrop-blur-sm border dark:border-gray-700 text-center">
-                  <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-4">Project Submitted!</h2>
-                  <p className="mb-6 text-lg">Your project has been submitted for review. Thank you for participating!</p>
+                  <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-4">
+                    Project Submitted!
+                  </h2>
+                  <p className="mb-6 text-lg">
+                    Your project has been submitted for review. Thank you for participating!
+                  </p>
                   <Link
                     href="/"
                     className="inline-block bg-purple-600 hover:bg-purple-700 text-white rounded-md px-6 py-3 font-medium"
@@ -123,14 +141,16 @@ export default function SubmitPage() {
                   </Link>
                 </div>
               ) : (
-                <form 
+                <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-6 backdrop-blur-sm border dark:border-gray-700"
                 >
                   <div className="space-y-6">
                     {/* Title */}
                     <div>
-                      <label htmlFor="title" className="block text-sm font-medium mb-1">Project Title</label>
+                      <label htmlFor="title" className="block text-sm font-medium mb-1">
+                        Project Title
+                      </label>
                       <input
                         id="title"
                         type="text"
@@ -145,7 +165,9 @@ export default function SubmitPage() {
 
                     {/* Description */}
                     <div>
-                      <label htmlFor="description" className="block text-sm font-medium mb-1">Description</label>
+                      <label htmlFor="description" className="block text-sm font-medium mb-1">
+                        Description
+                      </label>
                       <textarea
                         id="description"
                         rows={4}
@@ -160,7 +182,9 @@ export default function SubmitPage() {
 
                     {/* Link */}
                     <div>
-                      <label htmlFor="link" className="block text-sm font-medium mb-1">Project Link</label>
+                      <label htmlFor="link" className="block text-sm font-medium mb-1">
+                        Project Link
+                      </label>
                       <input
                         id="link"
                         type="text"
@@ -175,7 +199,9 @@ export default function SubmitPage() {
 
                     {/* Farcaster Username */}
                     <div>
-                      <label htmlFor="farcasterUsername" className="block text-sm font-medium mb-1">Farcaster Username <span className="text-gray-500 text-xs">(optional)</span></label>
+                      <label htmlFor="farcasterUsername" className="block text-sm font-medium mb-1">
+                        Farcaster Username <span className="text-gray-500 text-xs">(optional)</span>
+                      </label>
                       <div className="flex">
                         <div className="bg-gray-100 dark:bg-gray-600 px-3 py-2 rounded-l-md border border-r-0 dark:border-gray-500 flex items-center">
                           <p className="text-gray-700 dark:text-gray-300">https://warpcast.com/</p>
@@ -189,22 +215,24 @@ export default function SubmitPage() {
                         />
                       </div>
                       {errors.farcasterUsername && (
-                        <p className="text-red-500 text-sm mt-1">{errors.farcasterUsername.message}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.farcasterUsername.message}
+                        </p>
                       )}
                     </div>
 
                     {/* Image Upload */}
                     <div>
                       <label className="block text-sm font-medium mb-2">Project Image</label>
-                      
+
                       {imageUrl ? (
                         <div className="mb-4">
                           <div className="relative w-full h-48 rounded-md overflow-hidden">
                             {/* Using img element for preview in form */}
-                            <img 
-                              src={imageUrl} 
-                              alt="Project Preview" 
-                              className="w-full h-full object-cover" 
+                            <img
+                              src={imageUrl}
+                              alt="Project Preview"
+                              className="w-full h-full object-cover"
                             />
                             <button
                               type="button"
@@ -214,7 +242,15 @@ export default function SubmitPage() {
                               }}
                               className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
                             >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              >
                                 <path d="M18 6L6 18M6 6l12 12" />
                               </svg>
                             </button>

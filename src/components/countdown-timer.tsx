@@ -13,7 +13,7 @@ export function CountdownTimer() {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const difference = +targetDate - +new Date();
-      
+
       if (difference > 0) {
         setTimeLeft({
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),

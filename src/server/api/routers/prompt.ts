@@ -14,14 +14,14 @@ export const promptRouter = createTRPCRouter({
       z.object({
         text: z.string().min(1),
         farcasterUsername: z.string().optional(),
-      }),
+      })
     )
     .mutation(async ({ ctx, input }) => {
       // Process the username if provided
       let username = input.farcasterUsername;
       if (username) {
         // Strip @ if it's included at the beginning
-        username = username.startsWith('@') ? username.substring(1) : username;
+        username = username.startsWith("@") ? username.substring(1) : username;
         // Trim any whitespace
         username = username.trim();
         // If after processing it's empty, set to undefined

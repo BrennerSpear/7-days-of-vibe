@@ -1,5 +1,5 @@
 // import type { NextApiRequest, NextApiResponse } from "next";
-import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
+import { type FileRouter, createUploadthing } from "uploadthing/next-legacy";
 // import { UploadThingError } from "uploadthing/server";
 
 // Create new instance of uploadthing
@@ -12,17 +12,17 @@ const f = createUploadthing();
 export const ourFileRouter = {
   // Route for project image uploads
   imageUploader: f({
-    image: { 
+    image: {
       maxFileSize: "4MB",
-      maxFileCount: 1 
-    } 
+      maxFileCount: 1,
+    },
   })
     // Set permissions and file types for this FileRoute
     // .middleware(async ({ req, res }) => {
     //   // This code runs on your server before upload
     //   const user = await auth(req, res);
     //   console.log("Upload middleware executed for user:", user.id);
-      
+
     //   // Whatever is returned here is accessible in onUploadComplete as `metadata`
     //   return { userId: user.id };
     // })
@@ -32,11 +32,11 @@ export const ourFileRouter = {
       console.log("metadata:", metadata);
       // console.log("Upload complete for userId:", metadata?.userId || "anonymous");
       console.log("File details:", file);
-      
+
       // Use the string URL directly rather than the getter
       const fileUrl = file.ufsUrl;
       console.log("Sending URL to client:", fileUrl);
-      
+
       // Whatever is returned here is sent to the clientside callback
       return { uploadedBy: "anonymous", url: fileUrl };
     }),

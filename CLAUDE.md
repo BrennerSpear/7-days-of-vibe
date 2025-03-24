@@ -7,19 +7,18 @@
 - `npm run start`: Start production server
 
 ## Linting & Formatting
-- `npm run lint`: Run ESLint
-- `npm run lint:fix`: Run ESLint with auto-fix
-- `npm run format:check`: Check formatting with Prettier
-- `npm run format:write`: Auto-format code with Prettier
+- `npm run lint`: Run Biome linter
+- `npm run lint:fix`: Run Biome linter with auto-fix
+- `npm run format:check`: Check formatting with Biome
+- `npm run format:write`: Auto-format code with Biome
 - `npm run typecheck`: Run TypeScript type check
-- `npm run check`: Run both lint and typecheck
+- `npm run check`: Run both Biome check and typecheck
 
 ## Code Style
 - TypeScript with strict typing, path aliases (`~/*` for `./src/*`)
-- ESLint with Next.js and TypeScript rules
+- Biome for linting and formatting
 - Type imports using inline style
 - Unused variables prefixed with underscore
-- Prettier with tailwindcss plugin for formatting
 
 ## Database (Prisma)
 - `npm run db:generate`: Generate Prisma migrations
@@ -33,4 +32,4 @@
 - UI components in src/components with tailwind styling
 
 # Files to not change
-`.eslintrc.cjs`
+`biome.json`

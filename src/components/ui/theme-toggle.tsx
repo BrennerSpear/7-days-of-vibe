@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
@@ -11,7 +11,7 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <div className="w-9 h-9"></div>; // Placeholder with same dimensions
+    return <div className="w-9 h-9" />; // Placeholder with same dimensions
   }
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { type PromptIdea } from "@prisma/client";
+import type { PromptIdea } from "@prisma/client";
 import { api } from "~/utils/api";
 
 export function PromptsList() {
@@ -10,7 +10,7 @@ export function PromptsList() {
     return (
       <div className="flex h-64 items-center justify-center">
         <div className="flex flex-col items-center justify-center text-center">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-gray-900 dark:border-white"></div>
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-gray-900 dark:border-white" />
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Loading prompt ideas...</p>
         </div>
       </div>
@@ -48,14 +48,15 @@ function PromptCard({ prompt }: { prompt: PromptIdea }) {
       <p className="mb-3 text-gray-700 dark:text-gray-300">{prompt.text}</p>
       {prompt.farcasterUsername && (
         <div className="text-right text-sm font-light text-gray-500 dark:text-gray-400">
-          — <a 
-              href={`https://warpcast.com/${prompt.farcasterUsername}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-purple-600 dark:hover:text-purple-400 hover:underline"
-            >
-              {prompt.farcasterUsername}
-            </a>
+          —{" "}
+          <a
+            href={`https://warpcast.com/${prompt.farcasterUsername}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-purple-600 dark:hover:text-purple-400 hover:underline"
+          >
+            {prompt.farcasterUsername}
+          </a>
         </div>
       )}
     </div>

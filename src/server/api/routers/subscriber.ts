@@ -1,7 +1,7 @@
+import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { TRPCError } from "@trpc/server";
-import { Prisma } from "@prisma/client";
 
 export const subscriberRouter = createTRPCRouter({
   create: publicProcedure
@@ -9,7 +9,7 @@ export const subscriberRouter = createTRPCRouter({
       z.object({
         firstName: z.string().min(1).max(100),
         email: z.string().email(),
-      }),
+      })
     )
     .mutation(async ({ ctx, input }) => {
       try {
@@ -23,8 +23,8 @@ export const subscriberRouter = createTRPCRouter({
         // Handle unique constraint violation error (email already exists)
         if (
           error instanceof Prisma.PrismaClientKnownRequestError &&
-          error.code === "P2002" && 
-          error.meta?.target && 
+          error.code === "P2002" &&
+          error.meta?.target &&
           (error.meta.target as string[]).includes("email")
         ) {
           throw new TRPCError({

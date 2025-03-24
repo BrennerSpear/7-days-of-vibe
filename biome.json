@@ -1,0 +1,56 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noArrayIndexKey": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "useSelfClosingElements": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      },
+      "a11y": {
+        "useKeyWithClickEvents": "off",
+        "useKeyWithMouseEvents": "off",
+        "useButtonType": "off",
+        "noSvgWithoutTitle": "off",
+        "noLabelWithoutControl": "off"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentWidth": 2,
+    "indentStyle": "space",
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "trailingCommas": "es5",
+      "semicolons": "always"
+    }
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "ignore": [
+      "**/.next/**",
+      "**/node_modules/**",
+      "**/.vercel/**",
+      "**/*.prisma",
+      "**/*.sh",
+      "**/*.md",
+      "**/package-lock.json",
+      "**/.env*"
+    ]
+  }
+}
