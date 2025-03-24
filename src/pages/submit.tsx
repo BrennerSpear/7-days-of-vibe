@@ -1,34 +1,34 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import Head from "next/head";
-import Link from "next/link";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { NavBar } from "~/components/nav-bar";
-import { api } from "~/utils/api";
-import { UploadButton } from "~/utils/uploadthing";
+import { zodResolver } from '@hookform/resolvers/zod'
+import Head from 'next/head'
+import Link from 'next/link'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { NavBar } from '~/components/nav-bar'
+import { api } from '~/utils/api'
+import { UploadButton } from '~/utils/uploadthing'
 
 const projectSchema = z.object({
   title: z
     .string()
-    .min(3, "Title must be at least 3 characters")
-    .max(100, "Title must be less than 100 characters"),
+    .min(3, 'Title must be at least 3 characters')
+    .max(100, 'Title must be less than 100 characters'),
   description: z
     .string()
-    .min(10, "Description must be at least 10 characters")
-    .max(500, "Description must be less than 500 characters"),
-  link: z.string().url("Please enter a valid URL"),
+    .min(10, 'Description must be at least 10 characters')
+    .max(500, 'Description must be less than 500 characters'),
+  link: z.string().url('Please enter a valid URL'),
   farcasterUsername: z.string().optional(),
-  imageUrl: z.string().url("Please upload an image"),
-});
+  imageUrl: z.string().url('Please upload an image'),
+})
 
-type ProjectFormValues = z.infer<typeof projectSchema>;
+type ProjectFormValues = z.infer<typeof projectSchema>
 
 export default function SubmitPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
-  const [uploadError, setUploadError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
+  const [uploadError, setUploadError] = useState('')
   // This state is now handled inside the ImageUpload component
   // const [isUploading, setIsUploading] = useState(false);
 
@@ -40,65 +40,65 @@ export default function SubmitPage() {
   } = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      link: "",
-      farcasterUsername: "",
-      imageUrl: "",
+      title: '',
+      description: '',
+      link: '',
+      farcasterUsername: '',
+      imageUrl: '',
     },
-  });
+  })
 
   const createProject = api.project.create.useMutation({
     onSuccess: () => {
-      setIsSuccess(true);
-      setIsSubmitting(false);
+      setIsSuccess(true)
+      setIsSubmitting(false)
     },
     onError: (error) => {
-      console.error("Error submitting project:", error);
-      setIsSubmitting(false);
+      console.error('Error submitting project:', error)
+      setIsSubmitting(false)
     },
-  });
+  })
 
   const onSubmit = (data: ProjectFormValues) => {
-    setIsSubmitting(true);
-    createProject.mutate(data);
-  };
+    setIsSubmitting(true)
+    createProject.mutate(data)
+  }
 
   // Type for the upload response
   type UploadResponse = {
-    name: string;
-    size: number;
-    key: string;
-    uploadedBy?: string;
-    url?: string;
-  }[];
+    name: string
+    size: number
+    key: string
+    uploadedBy?: string
+    url?: string
+  }[]
 
   const handleUploadComplete = (res: UploadResponse) => {
-    console.log("Upload response received:", JSON.stringify(res));
+    console.log('Upload response received:', JSON.stringify(res))
     try {
       if (res && Array.isArray(res) && res.length > 0 && res[0]?.url) {
-        setImageUrl(res[0].url);
-        setValue("imageUrl", res[0].url);
-        setUploadError("");
+        setImageUrl(res[0].url)
+        setValue('imageUrl', res[0].url)
+        setUploadError('')
       } else {
-        console.error("Invalid upload response format:", res);
-        setUploadError("Failed to get upload URL. Please try again.");
+        console.error('Invalid upload response format:', res)
+        setUploadError('Failed to get upload URL. Please try again.')
       }
     } catch (error) {
-      console.error("Error processing upload response:", error);
-      setUploadError("Error processing upload. Please try again.");
+      console.error('Error processing upload response:', error)
+      setUploadError('Error processing upload. Please try again.')
     }
-  };
+  }
 
   const handleUploadError = (error: Error) => {
-    console.error("Upload error:", error);
-    setUploadError("Error uploading image. Please try again.");
-  };
+    console.error('Upload error:', error)
+    setUploadError('Error uploading image. Please try again.')
+  }
 
   const handleUploadStart = () => {
     // Upload is starting, clear any previous errors
-    setUploadError("");
-  };
+    setUploadError('')
+  }
 
   // We don't need to watch the link value, so we can remove this line
   // const linkValue = watch("link");
@@ -131,7 +131,8 @@ export default function SubmitPage() {
                     Project Submitted!
                   </h2>
                   <p className="mb-6 text-lg">
-                    Your project has been submitted for review. Thank you for participating!
+                    Your project has been submitted for review. Thank you for
+                    participating!
                   </p>
                   <Link
                     href="/"
@@ -148,7 +149,10 @@ export default function SubmitPage() {
                   <div className="space-y-6">
                     {/* Title */}
                     <div>
-                      <label htmlFor="title" className="block text-sm font-medium mb-1">
+                      <label
+                        htmlFor="title"
+                        className="block text-sm font-medium mb-1"
+                      >
                         Project Title
                       </label>
                       <input
@@ -156,16 +160,21 @@ export default function SubmitPage() {
                         type="text"
                         className="w-full px-4 py-2 rounded-md border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                         placeholder="Enter your project title"
-                        {...register("title")}
+                        {...register('title')}
                       />
                       {errors.title && (
-                        <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.title.message}
+                        </p>
                       )}
                     </div>
 
                     {/* Description */}
                     <div>
-                      <label htmlFor="description" className="block text-sm font-medium mb-1">
+                      <label
+                        htmlFor="description"
+                        className="block text-sm font-medium mb-1"
+                      >
                         Description
                       </label>
                       <textarea
@@ -173,16 +182,21 @@ export default function SubmitPage() {
                         rows={4}
                         className="w-full px-4 py-2 rounded-md border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                         placeholder="Describe your project"
-                        {...register("description")}
+                        {...register('description')}
                       />
                       {errors.description && (
-                        <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.description.message}
+                        </p>
                       )}
                     </div>
 
                     {/* Link */}
                     <div>
-                      <label htmlFor="link" className="block text-sm font-medium mb-1">
+                      <label
+                        htmlFor="link"
+                        className="block text-sm font-medium mb-1"
+                      >
                         Project Link
                       </label>
                       <input
@@ -190,28 +204,38 @@ export default function SubmitPage() {
                         type="text"
                         className="w-full px-4 py-2 rounded-md border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                         placeholder="https://your-project-link.com"
-                        {...register("link")}
+                        {...register('link')}
                       />
                       {errors.link && (
-                        <p className="text-red-500 text-sm mt-1">{errors.link.message}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.link.message}
+                        </p>
                       )}
                     </div>
 
                     {/* Farcaster Username */}
                     <div>
-                      <label htmlFor="farcasterUsername" className="block text-sm font-medium mb-1">
-                        Farcaster Username <span className="text-gray-500 text-xs">(optional)</span>
+                      <label
+                        htmlFor="farcasterUsername"
+                        className="block text-sm font-medium mb-1"
+                      >
+                        Farcaster Username{' '}
+                        <span className="text-gray-500 text-xs">
+                          (optional)
+                        </span>
                       </label>
                       <div className="flex">
                         <div className="bg-gray-100 dark:bg-gray-600 px-3 py-2 rounded-l-md border border-r-0 dark:border-gray-500 flex items-center">
-                          <p className="text-gray-700 dark:text-gray-300">https://warpcast.com/</p>
+                          <p className="text-gray-700 dark:text-gray-300">
+                            https://warpcast.com/
+                          </p>
                         </div>
                         <input
                           id="farcasterUsername"
                           type="text"
                           className="flex-grow px-4 py-2 rounded-r-md border dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                           placeholder="username"
-                          {...register("farcasterUsername")}
+                          {...register('farcasterUsername')}
                         />
                       </div>
                       {errors.farcasterUsername && (
@@ -223,7 +247,9 @@ export default function SubmitPage() {
 
                     {/* Image Upload */}
                     <div>
-                      <label className="block text-sm font-medium mb-2">Project Image</label>
+                      <label className="block text-sm font-medium mb-2">
+                        Project Image
+                      </label>
 
                       {imageUrl ? (
                         <div className="mb-4">
@@ -237,8 +263,8 @@ export default function SubmitPage() {
                             <button
                               type="button"
                               onClick={() => {
-                                setImageUrl("");
-                                setValue("imageUrl", "");
+                                setImageUrl('')
+                                setValue('imageUrl', '')
                               }}
                               className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
                             >
@@ -266,12 +292,12 @@ export default function SubmitPage() {
                               <UploadButton
                                 endpoint="imageUploader"
                                 onClientUploadComplete={(res) => {
-                                  console.log("Upload completed:", res);
-                                  handleUploadComplete(res);
+                                  console.log('Upload completed:', res)
+                                  handleUploadComplete(res)
                                 }}
                                 onUploadError={(error) => {
-                                  console.error("Upload error details:", error);
-                                  handleUploadError(error);
+                                  console.error('Upload error details:', error)
+                                  handleUploadError(error)
                                 }}
                                 onUploadBegin={handleUploadStart}
                                 className="ut-button:bg-purple-600 ut-button:hover:bg-purple-700 ut-button:text-white"
@@ -279,10 +305,14 @@ export default function SubmitPage() {
                             </div>
                           </div>
                           {uploadError && (
-                            <p className="text-red-500 text-sm mt-1">{uploadError}</p>
+                            <p className="text-red-500 text-sm mt-1">
+                              {uploadError}
+                            </p>
                           )}
                           {errors.imageUrl && (
-                            <p className="text-red-500 text-sm mt-1">{errors.imageUrl.message}</p>
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.imageUrl.message}
+                            </p>
                           )}
                         </div>
                       )}
@@ -294,7 +324,7 @@ export default function SubmitPage() {
                         disabled={isSubmitting}
                         className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md font-medium disabled:opacity-70"
                       >
-                        {isSubmitting ? "Submitting..." : "Submit Project"}
+                        {isSubmitting ? 'Submitting...' : 'Submit Project'}
                       </button>
                     </div>
                   </div>
@@ -319,5 +349,5 @@ export default function SubmitPage() {
         </footer>
       </div>
     </>
-  );
+  )
 }

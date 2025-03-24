@@ -1,8 +1,12 @@
-import { Card, CardContent } from "~/components/ui/card";
-import { api } from "~/utils/api";
+import { Card, CardContent } from '~/components/ui/card'
+import { api } from '~/utils/api'
 
 export function ProjectGrid() {
-  const { data: projects, isLoading, error } = api.project.getApproved.useQuery();
+  const {
+    data: projects,
+    isLoading,
+    error,
+  } = api.project.getApproved.useQuery()
 
   if (error) {
     return (
@@ -11,7 +15,7 @@ export function ProjectGrid() {
           Error loading projects. Please try again later.
         </p>
       </div>
-    );
+    )
   }
 
   if (!projects || projects.length === 0) {
@@ -33,7 +37,7 @@ export function ProjectGrid() {
           </p>
         )}
       </div>
-    );
+    )
   }
 
   return (
@@ -56,22 +60,22 @@ export function ProjectGrid() {
                 </CardContent>
               </Card>
             ))
-        : projects.map((project: ProjectCardProps["project"]) => (
+        : projects.map((project: ProjectCardProps['project']) => (
             <ProjectCard key={project.id} project={project} />
           ))}
     </div>
-  );
+  )
 }
 
 interface ProjectCardProps {
   project: {
-    id: string;
-    title: string;
-    description: string;
-    link: string;
-    imageUrl: string;
-    farcasterUsername: string;
-  };
+    id: string
+    title: string
+    description: string
+    link: string
+    imageUrl: string
+    farcasterUsername: string
+  }
 }
 
 function ProjectCard({ project }: ProjectCardProps) {
@@ -85,13 +89,16 @@ function ProjectCard({ project }: ProjectCardProps) {
           className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
           onError={(e) => {
             // If image fails to load, replace with placeholder
-            e.currentTarget.src = "https://placehold.co/600x400/9C6ADE/FFFFFF?text=Project+Image";
+            e.currentTarget.src =
+              'https://placehold.co/600x400/9C6ADE/FFFFFF?text=Project+Image'
           }}
         />
       </div>
       <CardContent className="p-5">
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className="text-muted-foreground mb-4 text-sm line-clamp-3">{project.description}</p>
+        <p className="text-muted-foreground mb-4 text-sm line-clamp-3">
+          {project.description}
+        </p>
         <div className="flex justify-between items-center">
           {project.farcasterUsername ? (
             <a
@@ -116,5 +123,5 @@ function ProjectCard({ project }: ProjectCardProps) {
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

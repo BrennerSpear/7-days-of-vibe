@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { z } from 'zod'
+import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 
 export const projectRouter = createTRPCRouter({
   create: publicProcedure
@@ -10,7 +10,7 @@ export const projectRouter = createTRPCRouter({
         link: z.string().url(),
         imageUrl: z.string().url(),
         farcasterUsername: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return ctx.db.project.create({
@@ -19,10 +19,10 @@ export const projectRouter = createTRPCRouter({
           description: input.description,
           link: input.link,
           imageUrl: input.imageUrl,
-          farcasterUsername: input.farcasterUsername ?? "", // Provide empty string as default
+          farcasterUsername: input.farcasterUsername ?? '', // Provide empty string as default
           approved: true, // default to true for now
         },
-      });
+      })
     }),
 
   getApproved: publicProcedure.query(({ ctx }) => {
@@ -31,8 +31,8 @@ export const projectRouter = createTRPCRouter({
         approved: true,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
-    });
+    })
   }),
-});
+})

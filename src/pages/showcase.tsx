@@ -1,7 +1,7 @@
-import Head from "next/head";
-import Link from "next/link";
-import { NavBar } from "~/components/nav-bar";
-import { ProjectGrid } from "~/components/project-grid";
+import Head from 'next/head'
+import Link from 'next/link'
+import { NavBar } from '~/components/nav-bar'
+import { ProjectGrid } from '~/components/project-grid'
 
 export default function Showcase() {
   return (
@@ -48,5 +48,5 @@ export default function Showcase() {
         </footer>
       </div>
     </>
-  );
+  )
 }

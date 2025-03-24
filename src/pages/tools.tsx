@@ -1,112 +1,116 @@
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { NavBar } from "~/components/nav-bar";
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import { NavBar } from '~/components/nav-bar'
 
 // Tool data structure for easy addition of new tools
 interface ToolInfo {
-  name: string;
-  url: string;
-  logo: string;
-  description: string;
-  freeUsage: string;
+  name: string
+  url: string
+  logo: string
+  description: string
+  freeUsage: string
   paidPlan: {
-    name: string;
-    price: string;
-    features: string;
-  };
-  hasDatabase: boolean;
-  hasSecrets: boolean;
-  difficultyLevel: "Beginner-friendly" | "Intermediate" | "Advanced";
-  additionalNotes: string;
+    name: string
+    price: string
+    features: string
+  }
+  hasDatabase: boolean
+  hasSecrets: boolean
+  difficultyLevel: 'Beginner-friendly' | 'Intermediate' | 'Advanced'
+  additionalNotes: string
 }
 
 // Tool data array - add new tools here
 const tools: ToolInfo[] = [
   {
-    name: "Replit",
-    url: "https://replit.com/",
-    logo: "/logos/replit.png",
-    description: "Highly configurable, slightly more advanced",
+    name: 'Replit',
+    url: 'https://replit.com/',
+    logo: '/logos/replit.png',
+    description: 'Highly configurable, slightly more advanced',
     freeUsage:
-      "New users receive 10 free Agent checkpoints and 20 Advanced Assistant edit requests.",
+      'New users receive 10 free Agent checkpoints and 20 Advanced Assistant edit requests.',
     paidPlan: {
-      name: "Replit Core",
-      price: "$20",
-      features: "Full Replit Agent access and $25 in monthly compute credits.",
+      name: 'Replit Core',
+      price: '$20',
+      features: 'Full Replit Agent access and $25 in monthly compute credits.',
     },
     hasDatabase: true,
     hasSecrets: true,
-    difficultyLevel: "Intermediate",
-    additionalNotes: "Versatile platform for both beginners and experienced developers.",
+    difficultyLevel: 'Intermediate',
+    additionalNotes:
+      'Versatile platform for both beginners and experienced developers.',
   },
   {
-    name: "Srcbook",
-    url: "https://srcbook.com/apps",
-    logo: "/logos/srcbook.png",
-    description: "Lower configurability, easier for beginners",
-    freeUsage: "15 messages (DM warpcast.com/pushix for an extra 10 free messages)",
+    name: 'Srcbook',
+    url: 'https://srcbook.com/apps',
+    logo: '/logos/srcbook.png',
+    description: 'Lower configurability, easier for beginners',
+    freeUsage:
+      '15 messages (DM warpcast.com/pushix for an extra 10 free messages)',
     paidPlan: {
-      name: "Pro Plan",
-      price: "$20",
-      features: "250 more messages a month",
+      name: 'Pro Plan',
+      price: '$20',
+      features: '250 more messages a month',
     },
     hasDatabase: false,
     hasSecrets: false,
-    difficultyLevel: "Beginner-friendly",
+    difficultyLevel: 'Beginner-friendly',
     additionalNotes: "Simple interface that's easy to get started with.",
   },
   {
-    name: "Lovable.dev",
-    url: "https://lovable.dev/",
-    logo: "/logos/lovable.png",
-    description: "Particularly pretty designs",
-    freeUsage: "5 free messages",
+    name: 'Lovable.dev',
+    url: 'https://lovable.dev/',
+    logo: '/logos/lovable.png',
+    description: 'Particularly pretty designs',
+    freeUsage: '5 free messages',
     paidPlan: {
-      name: "Starter Plan",
-      price: "$20",
-      features: "100 messages per month.",
+      name: 'Starter Plan',
+      price: '$20',
+      features: '100 messages per month.',
     },
     hasDatabase: false,
     hasSecrets: false,
-    difficultyLevel: "Beginner-friendly",
-    additionalNotes: "Focus on beautiful UI designs.",
+    difficultyLevel: 'Beginner-friendly',
+    additionalNotes: 'Focus on beautiful UI designs.',
   },
   {
-    name: "V0.dev",
-    url: "https://v0.dev/",
-    logo: "/logos/v0.png",
-    description: "A tool from Vercel, a popular devtool, highly configurable, good for devs",
-    freeUsage: "3 free messages",
+    name: 'V0.dev',
+    url: 'https://v0.dev/',
+    logo: '/logos/v0.png',
+    description:
+      'A tool from Vercel, a popular devtool, highly configurable, good for devs',
+    freeUsage: '3 free messages',
     paidPlan: {
-      name: "Pro Plan",
-      price: "$20",
-      features: "10-20x more messages than Free, Import from Figma",
+      name: 'Pro Plan',
+      price: '$20',
+      features: '10-20x more messages than Free, Import from Figma',
     },
     hasDatabase: true,
     hasSecrets: false,
-    difficultyLevel: "Intermediate",
-    additionalNotes: "Can hook to Supabase for a database, easier for beginners.",
+    difficultyLevel: 'Intermediate',
+    additionalNotes:
+      'Can hook to Supabase for a database, easier for beginners.',
   },
   {
-    name: "Bolt.new",
-    url: "https://bolt.new/",
-    logo: "/logos/bolt.png",
+    name: 'Bolt.new',
+    url: 'https://bolt.new/',
+    logo: '/logos/bolt.png',
     description:
-      "Can pick your preferred tech stack (NextJS, Vite, etc), so good for opinionated devs",
-    freeUsage: "Limited free usage",
+      'Can pick your preferred tech stack (NextJS, Vite, etc), so good for opinionated devs',
+    freeUsage: 'Limited free usage',
     paidPlan: {
-      name: "Basic Plan",
-      price: "$20",
-      features: "10 million tokens (~words) per month.",
+      name: 'Basic Plan',
+      price: '$20',
+      features: '10 million tokens (~words) per month.',
     },
     hasDatabase: true,
     hasSecrets: true,
-    difficultyLevel: "Intermediate",
+    difficultyLevel: 'Intermediate',
     additionalNotes:
-      "Asks for API keys if you need them (has a concept of a .env file). Can hook to Supabase for a database.",
+      'Asks for API keys if you need them (has a concept of a .env file). Can hook to Supabase for a database.',
   },
-];
+]
 
 export default function ToolsComparison() {
   return (
@@ -133,7 +137,8 @@ export default function ToolsComparison() {
               </h1>
 
               <p className="text-lg text-center text-gray-700 dark:text-gray-300 mb-12">
-                Compare different vibe code tools to find the one that best fits your project needs.
+                Compare different vibe code tools to find the one that best fits
+                your project needs.
               </p>
 
               {/* Comparison Table */}
@@ -170,13 +175,15 @@ export default function ToolsComparison() {
                         key={tool.name}
                         className={
                           index % 2 === 0
-                            ? "bg-white/50 dark:bg-gray-800/20"
-                            : "bg-purple-50/50 dark:bg-gray-800/40"
+                            ? 'bg-white/50 dark:bg-gray-800/20'
+                            : 'bg-purple-50/50 dark:bg-gray-800/40'
                         }
                       >
                         <td className="p-4 border-b dark:border-gray-700 align-top">
                           <div className="flex flex-col gap-2">
-                            <div className="font-bold text-base">{tool.name}</div>
+                            <div className="font-bold text-base">
+                              {tool.name}
+                            </div>
                             <a
                               href={tool.url}
                               target="_blank"
@@ -211,29 +218,33 @@ export default function ToolsComparison() {
                         <td className="p-4 border-b dark:border-gray-700 text-center align-middle">
                           <span
                             className={
-                              tool.hasDatabase ? "text-green-600 font-bold" : "text-red-600"
+                              tool.hasDatabase
+                                ? 'text-green-600 font-bold'
+                                : 'text-red-600'
                             }
                           >
-                            {tool.hasDatabase ? "✓" : "✗"}
+                            {tool.hasDatabase ? '✓' : '✗'}
                           </span>
                         </td>
                         <td className="p-4 border-b dark:border-gray-700 text-center align-middle">
                           <span
                             className={
-                              tool.hasSecrets ? "text-green-600 font-bold" : "text-red-600"
+                              tool.hasSecrets
+                                ? 'text-green-600 font-bold'
+                                : 'text-red-600'
                             }
                           >
-                            {tool.hasSecrets ? "✓" : "✗"}
+                            {tool.hasSecrets ? '✓' : '✗'}
                           </span>
                         </td>
                         <td className="p-4 border-b dark:border-gray-700 align-middle">
                           <span
                             className={
-                              tool.difficultyLevel === "Beginner-friendly"
-                                ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full text-xs"
-                                : tool.difficultyLevel === "Intermediate"
-                                  ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-full text-xs"
-                                  : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-1 rounded-full text-xs"
+                              tool.difficultyLevel === 'Beginner-friendly'
+                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full text-xs'
+                                : tool.difficultyLevel === 'Intermediate'
+                                  ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-full text-xs'
+                                  : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-1 rounded-full text-xs'
                             }
                           >
                             {tool.difficultyLevel}
@@ -299,10 +310,12 @@ export default function ToolsComparison() {
                           <div className="text-sm">
                             <span
                               className={
-                                tool.hasDatabase ? "text-green-600 font-bold" : "text-red-600"
+                                tool.hasDatabase
+                                  ? 'text-green-600 font-bold'
+                                  : 'text-red-600'
                               }
                             >
-                              {tool.hasDatabase ? "✓" : "✗"}
+                              {tool.hasDatabase ? '✓' : '✗'}
                             </span>
                           </div>
                         </div>
@@ -314,10 +327,12 @@ export default function ToolsComparison() {
                           <div className="text-sm">
                             <span
                               className={
-                                tool.hasSecrets ? "text-green-600 font-bold" : "text-red-600"
+                                tool.hasSecrets
+                                  ? 'text-green-600 font-bold'
+                                  : 'text-red-600'
                               }
                             >
-                              {tool.hasSecrets ? "✓" : "✗"}
+                              {tool.hasSecrets ? '✓' : '✗'}
                             </span>
                           </div>
                         </div>
@@ -329,11 +344,11 @@ export default function ToolsComparison() {
                           <div className="text-sm">
                             <span
                               className={
-                                tool.difficultyLevel === "Beginner-friendly"
-                                  ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full text-xs"
-                                  : tool.difficultyLevel === "Intermediate"
-                                    ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-full text-xs"
-                                    : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-1 rounded-full text-xs"
+                                tool.difficultyLevel === 'Beginner-friendly'
+                                  ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-2 py-1 rounded-full text-xs'
+                                  : tool.difficultyLevel === 'Intermediate'
+                                    ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-full text-xs'
+                                    : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 px-2 py-1 rounded-full text-xs'
                               }
                             >
                               {tool.difficultyLevel}
@@ -359,8 +374,9 @@ export default function ToolsComparison() {
 
               <div className="mt-12 text-center">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  All pricing and features are current as of March 2025. Please check the official
-                  websites for the most up-to-date information.
+                  All pricing and features are current as of March 2025. Please
+                  check the official websites for the most up-to-date
+                  information.
                 </p>
               </div>
             </div>
@@ -385,5 +401,5 @@ export default function ToolsComparison() {
         </footer>
       </div>
     </>
-  );
+  )
 }

@@ -1,26 +1,26 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { useState } from "react";
-import { NavBar } from "~/components/nav-bar";
-import { PromptModal } from "~/components/prompt-form";
-import { PromptsList } from "~/components/prompts-list";
-import { Button } from "~/components/ui/button";
-import { useToast } from "~/components/ui/toast";
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import { useState } from 'react'
+import { NavBar } from '~/components/nav-bar'
+import { PromptModal } from '~/components/prompt-form'
+import { PromptsList } from '~/components/prompts-list'
+import { Button } from '~/components/ui/button'
+import { useToast } from '~/components/ui/toast'
 
 const PromptsPage: NextPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { showToast, ToastContainer } = useToast();
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { showToast, ToastContainer } = useToast()
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
 
   const handlePromptSubmitSuccess = () => {
-    closeModal();
+    closeModal()
     showToast(
-      "Your prompt idea has been submitted successfully! It will be reviewed before appearing on the site.",
-      "success"
-    );
-  };
+      'Your prompt idea has been submitted successfully! It will be reviewed before appearing on the site.',
+      'success',
+    )
+  }
 
   return (
     <>
@@ -55,7 +55,7 @@ const PromptsPage: NextPage = () => {
         <ToastContainer />
       </main>
     </>
-  );
-};
+  )
+}
 
-export default PromptsPage;
+export default PromptsPage

@@ -1,81 +1,81 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import { Button } from "~/components/ui/button";
-import { api } from "~/utils/api";
+import { useEffect, useState } from 'react'
+import { Button } from '~/components/ui/button'
+import { api } from '~/utils/api'
 
 export function PromptModal({
   isOpen,
   onClose,
   onSubmitSuccess,
 }: {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmitSuccess: () => void;
+  isOpen: boolean
+  onClose: () => void
+  onSubmitSuccess: () => void
 }) {
-  const [prompt, setPrompt] = useState("");
-  const [username, setUsername] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const [prompt, setPrompt] = useState('')
+  const [username, setUsername] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
   // Add Escape key listener
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
-      if (isOpen && e.key === "Escape") {
-        onClose();
+      if (isOpen && e.key === 'Escape') {
+        onClose()
       }
-    };
+    }
 
     // Add event listener when the modal is open
     if (isOpen) {
-      document.addEventListener("keydown", handleEscapeKey);
+      document.addEventListener('keydown', handleEscapeKey)
     }
 
     // Cleanup the event listener when component unmounts or modal closes
     return () => {
-      document.removeEventListener("keydown", handleEscapeKey);
-    };
-  }, [isOpen, onClose]);
+      document.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [isOpen, onClose])
 
   const createPrompt = api.prompt.create.useMutation({
     onSuccess: () => {
-      setPrompt("");
-      setUsername("");
-      setSubmitting(false);
+      setPrompt('')
+      setUsername('')
+      setSubmitting(false)
       // Notify parent component of success and close immediately
-      onSubmitSuccess();
+      onSubmitSuccess()
     },
     onError: (error) => {
-      setError(error.message);
-      setSubmitting(false);
+      setError(error.message)
+      setSubmitting(false)
     },
-  });
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setSubmitting(true);
+    e.preventDefault()
+    setError('')
+    setSubmitting(true)
 
     if (!prompt) {
-      setError("Please enter a prompt idea");
-      setSubmitting(false);
-      return;
+      setError('Please enter a prompt idea')
+      setSubmitting(false)
+      return
     }
 
     createPrompt.mutate({
       text: prompt,
       farcasterUsername: username || undefined,
-    });
-  };
+    })
+  }
 
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     // Only close if clicking the backdrop (not the modal itself)
     if (e.target === e.currentTarget) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   return (
     <div
@@ -84,12 +84,19 @@ export function PromptModal({
     >
       <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Submit a Prompt Idea</h2>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+            Submit a Prompt Idea
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -122,7 +129,8 @@ export function PromptModal({
               htmlFor="username"
               className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
             >
-              Farcaster Username <span className="text-xs text-gray-500">(optional)</span>
+              Farcaster Username{' '}
+              <span className="text-xs text-gray-500">(optional)</span>
             </label>
             <input
               type="text"
@@ -142,7 +150,7 @@ export function PromptModal({
               Cancel
             </Button>
             <Button type="submit" disabled={submitting} className="flex-1">
-              {submitting ? "Submitting..." : "Submit"}
+              {submitting ? 'Submitting...' : 'Submit'}
             </Button>
           </div>
         </form>
@@ -153,5 +161,5 @@ export function PromptModal({
         )}
       </div>
     </div>
-  );
+  )
 }

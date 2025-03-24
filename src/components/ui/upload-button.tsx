@@ -1,10 +1,10 @@
-import { useCallback } from "react";
-import { UploadButton as UTButton } from "~/utils/uploadthing";
+import { useCallback } from 'react'
+import { UploadButton as UTButton } from '~/utils/uploadthing'
 
 interface UploadButtonProps {
-  onUploadComplete: (url: string) => void;
-  onUploadError: (error: Error) => void;
-  onUploadStart?: () => void;
+  onUploadComplete: (url: string) => void
+  onUploadError: (error: Error) => void
+  onUploadStart?: () => void
 }
 
 // Using a simpler component for more reliable uploads
@@ -17,11 +17,11 @@ export function UploadButton({
   const handleComplete = useCallback(
     (res: Array<{ url: string }>) => {
       if (res?.[0]?.url) {
-        onUploadComplete(res[0].url);
+        onUploadComplete(res[0].url)
       }
     },
-    [onUploadComplete]
-  );
+    [onUploadComplete],
+  )
 
   return (
     <div className="custom-upload">
@@ -32,12 +32,12 @@ export function UploadButton({
         onUploadBegin={onUploadStart}
         appearance={{
           button: {
-            backgroundColor: "#9333EA",
-            color: "white",
-            fontSize: "14px",
+            backgroundColor: '#9333EA',
+            color: 'white',
+            fontSize: '14px',
           },
         }}
       />
     </div>
-  );
+  )
 }

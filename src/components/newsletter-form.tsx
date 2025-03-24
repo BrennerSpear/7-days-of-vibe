@@ -1,42 +1,42 @@
-import Link from "next/link";
-import { useState } from "react";
-import { Button } from "~/components/ui/button";
-import { Card, CardContent } from "~/components/ui/card";
-import { api } from "~/utils/api";
+import Link from 'next/link'
+import { useState } from 'react'
+import { Button } from '~/components/ui/button'
+import { Card, CardContent } from '~/components/ui/card'
+import { api } from '~/utils/api'
 
 export default function NewsletterForm() {
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [firstName, setFirstName] = useState('')
+  const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState('')
 
   const createSubscriberMutation = api.subscriber.create.useMutation({
     onSuccess: () => {
-      setIsSuccess(true);
-      setFirstName("");
-      setEmail("");
-      setIsSubmitting(false);
+      setIsSuccess(true)
+      setFirstName('')
+      setEmail('')
+      setIsSubmitting(false)
     },
     onError: (error) => {
-      setError(error.message);
-      setIsSubmitting(false);
+      setError(error.message)
+      setIsSubmitting(false)
     },
-  });
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError("");
+    e.preventDefault()
+    setIsSubmitting(true)
+    setError('')
 
     if (!firstName.trim() || !email.trim()) {
-      setError("Please fill in all fields");
-      setIsSubmitting(false);
-      return;
+      setError('Please fill in all fields')
+      setIsSubmitting(false)
+      return
     }
 
-    createSubscriberMutation.mutate({ firstName, email });
-  };
+    createSubscriberMutation.mutate({ firstName, email })
+  }
 
   return (
     <Card className="max-w-xl mx-auto bg-white/50 dark:bg-gray-800/50">
@@ -82,15 +82,17 @@ export default function NewsletterForm() {
               className="w-full py-2 bg-primary hover:bg-primary/90"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Subscribing..." : "Subscribe"}
+              {isSubmitting ? 'Subscribing...' : 'Subscribe'}
             </Button>
 
             {error && (
-              <p className="text-red-600 dark:text-red-400 text-sm text-center mt-2">{error}</p>
+              <p className="text-red-600 dark:text-red-400 text-sm text-center mt-2">
+                {error}
+              </p>
             )}
           </form>
         )}
       </CardContent>
     </Card>
-  );
+  )
 }

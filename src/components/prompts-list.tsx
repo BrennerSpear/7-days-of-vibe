@@ -1,20 +1,22 @@
-"use client";
+'use client'
 
-import type { PromptIdea } from "@prisma/client";
-import { api } from "~/utils/api";
+import type { PromptIdea } from '@prisma/client'
+import { api } from '~/utils/api'
 
 export function PromptsList() {
-  const { data: prompts, isLoading, error } = api.prompt.getAll.useQuery();
+  const { data: prompts, isLoading, error } = api.prompt.getAll.useQuery()
 
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
         <div className="flex flex-col items-center justify-center text-center">
           <div className="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-gray-900 dark:border-white" />
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Loading prompt ideas...</p>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Loading prompt ideas...
+          </p>
         </div>
       </div>
-    );
+    )
   }
 
   if (error) {
@@ -22,7 +24,7 @@ export function PromptsList() {
       <div className="rounded-lg bg-red-100 p-4 text-red-800 dark:bg-red-800 dark:text-red-100">
         Failed to load prompts
       </div>
-    );
+    )
   }
 
   if (!prompts || prompts.length === 0) {
@@ -30,7 +32,7 @@ export function PromptsList() {
       <div className="my-8 text-center text-gray-600 dark:text-gray-400">
         No prompts available yet. Be the first to submit one!
       </div>
-    );
+    )
   }
 
   return (
@@ -39,7 +41,7 @@ export function PromptsList() {
         <PromptCard key={prompt.id} prompt={prompt} />
       ))}
     </div>
-  );
+  )
 }
 
 function PromptCard({ prompt }: { prompt: PromptIdea }) {
@@ -48,7 +50,7 @@ function PromptCard({ prompt }: { prompt: PromptIdea }) {
       <p className="mb-3 text-gray-700 dark:text-gray-300">{prompt.text}</p>
       {prompt.farcasterUsername && (
         <div className="text-right text-sm font-light text-gray-500 dark:text-gray-400">
-          —{" "}
+          —{' '}
           <a
             href={`https://warpcast.com/${prompt.farcasterUsername}`}
             target="_blank"
@@ -60,5 +62,5 @@ function PromptCard({ prompt }: { prompt: PromptIdea }) {
         </div>
       )}
     </div>
-  );
+  )
 }

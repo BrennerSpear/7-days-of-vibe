@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from 'react'
 
 export function CountdownTimer() {
   // Use useMemo to avoid recreating the date object on every render
-  const targetDate = useMemo(() => new Date("2025-04-01T00:00:00Z"), []); // Set your target date here
+  const targetDate = useMemo(() => new Date('2025-04-01T00:00:00Z'), []) // Set your target date here
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
-  });
+  })
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const difference = +targetDate - +new Date();
+      const difference = +targetDate - +new Date()
 
       if (difference > 0) {
         setTimeLeft({
@@ -20,17 +20,17 @@ export function CountdownTimer() {
           hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60),
-        });
+        })
       } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
       }
-    };
+    }
 
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
+    calculateTimeLeft()
+    const timer = setInterval(calculateTimeLeft, 1000)
 
-    return () => clearInterval(timer);
-  }, [targetDate]);
+    return () => clearInterval(timer)
+  }, [targetDate])
 
   return (
     <div className="mb-8">
@@ -64,5 +64,5 @@ export function CountdownTimer() {
         </div>
       </div>
     </div>
-  );
+  )
 }

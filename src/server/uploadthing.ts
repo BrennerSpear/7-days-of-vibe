@@ -1,9 +1,9 @@
 // import type { NextApiRequest, NextApiResponse } from "next";
-import { type FileRouter, createUploadthing } from "uploadthing/next-legacy";
+import { type FileRouter, createUploadthing } from 'uploadthing/next-legacy'
 // import { UploadThingError } from "uploadthing/server";
 
 // Create new instance of uploadthing
-const f = createUploadthing();
+const f = createUploadthing()
 
 // Simple auth function (no actual auth required for this demo)
 // const auth = (req: NextApiRequest, res: NextApiResponse) => ({ id: "anonymous" });
@@ -13,7 +13,7 @@ export const ourFileRouter = {
   // Route for project image uploads
   imageUploader: f({
     image: {
-      maxFileSize: "4MB",
+      maxFileSize: '4MB',
       maxFileCount: 1,
     },
   })
@@ -29,17 +29,17 @@ export const ourFileRouter = {
     // This function runs on the server after upload
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      console.log("metadata:", metadata);
+      console.log('metadata:', metadata)
       // console.log("Upload complete for userId:", metadata?.userId || "anonymous");
-      console.log("File details:", file);
+      console.log('File details:', file)
 
       // Use the string URL directly rather than the getter
-      const fileUrl = file.ufsUrl;
-      console.log("Sending URL to client:", fileUrl);
+      const fileUrl = file.ufsUrl
+      console.log('Sending URL to client:', fileUrl)
 
       // Whatever is returned here is sent to the clientside callback
-      return { uploadedBy: "anonymous", url: fileUrl };
+      return { uploadedBy: 'anonymous', url: fileUrl }
     }),
-} satisfies FileRouter;
+} satisfies FileRouter
 
-export type OurFileRouter = typeof ourFileRouter;
+export type OurFileRouter = typeof ourFileRouter

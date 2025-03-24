@@ -1,10 +1,10 @@
-import { GeistSans } from "geist/font/sans";
-import { ThemeProvider } from "next-themes";
-import type { AppType } from "next/app";
+import { GeistSans } from 'geist/font/sans'
+import { ThemeProvider } from 'next-themes'
+import type { AppType } from 'next/app'
 
-import { api } from "~/utils/api";
+import { api } from '~/utils/api'
 
-import "~/styles/globals.css";
+import '~/styles/globals.css'
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -13,7 +13,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </div>
     </ThemeProvider>
-  );
-};
+  )
+}
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(MyApp)

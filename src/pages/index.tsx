@@ -1,8 +1,8 @@
-import Head from "next/head";
-import Link from "next/link";
-import { NavBar } from "~/components/nav-bar";
-import NewsletterForm from "~/components/newsletter-form";
-import { Button } from "~/components/ui/button";
+import Head from 'next/head'
+import Link from 'next/link'
+import { NavBar } from '~/components/nav-bar'
+import NewsletterForm from '~/components/newsletter-form'
+import { Button } from '~/components/ui/button'
 
 export default function Home() {
   return (
@@ -30,9 +30,9 @@ export default function Home() {
                 </h1>
                 <p className="text-xl text-muted-foreground mb-8">
                   Build 1 little app a day. <br />
-                  <br /> Bringing an idea to life has never been easier. No coding is required to
-                  build an app or website. Taking an idea to something that works is now measured in
-                  minutes, not days.
+                  <br /> Bringing an idea to life has never been easier. No
+                  coding is required to build an app or website. Taking an idea
+                  to something that works is now measured in minutes, not days.
                 </p>
                 <div className="space-y-8">
                   {/* Event Dates */}
@@ -47,18 +47,26 @@ export default function Home() {
                     </h3>
                     <ul className="space-y-3 text-left">
                       <li className="flex items-start gap-2">
-                        <span className="text-purple-600 dark:text-purple-300 font-bold">•</span>
-                        <span className="dark:text-gray-200">1 project a day.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-purple-600 dark:text-purple-300 font-bold">•</span>
+                        <span className="text-purple-600 dark:text-purple-300 font-bold">
+                          •
+                        </span>
                         <span className="dark:text-gray-200">
-                          You can spend as little as 5 minutes on it, even just 1 good prompt can
-                          make something fun or useful!
+                          1 project a day.
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-purple-600 dark:text-purple-300 font-bold">•</span>
+                        <span className="text-purple-600 dark:text-purple-300 font-bold">
+                          •
+                        </span>
+                        <span className="dark:text-gray-200">
+                          You can spend as little as 5 minutes on it, even just
+                          1 good prompt can make something fun or useful!
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-purple-600 dark:text-purple-300 font-bold">
+                          •
+                        </span>
                         <span className="dark:text-gray-200">
                           No manual coding. We&apos;re here to Vibe, not Code.
                         </span>
@@ -107,10 +115,10 @@ export default function Home() {
         </footer>
       </div>
     </>
-  );
+  )
 }
 
 // Disable SSR for the entire home page
 Home.getInitialProps = () => {
-  return { props: {} };
-};
+  return { props: {} }
+}
