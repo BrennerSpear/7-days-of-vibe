@@ -31,7 +31,7 @@ export const promptRouter = createTRPCRouter({
       return await ctx.db.promptIdea.create({
         data: {
           text: input.text,
-          farcasterUsername: username || null,
+          farcasterUsername: username ?? null,
         },
       });
     }),
