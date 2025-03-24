@@ -36,3 +36,14 @@ model Subscriber {
 
     @@index([email])
 }
+
+model PromptIdea {
+    id                String   @id @default(cuid())
+    text              String
+    farcasterUsername String?
+    approved          Boolean  @default(false)
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+
+    @@index([approved])
+}

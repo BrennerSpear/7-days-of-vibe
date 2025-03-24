@@ -1,4 +1,5 @@
 import { projectRouter } from "~/server/api/routers/project";
+import { promptRouter } from "~/server/api/routers/prompt";
 import { subscriberRouter } from "~/server/api/routers/subscriber";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
@@ -9,6 +10,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
 	project: projectRouter,
+	prompt: promptRouter,
 	subscriber: subscriberRouter,
 });
 
