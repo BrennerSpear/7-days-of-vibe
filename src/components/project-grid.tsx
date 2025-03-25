@@ -79,7 +79,7 @@ interface ProjectCardProps {
     link: string
     imageUrl: string
     farcasterUsername: string
-    createdAt: Date
+    createdAt: Date | string
   }
 }
 
@@ -104,16 +104,21 @@ function ProjectCard({ project }: ProjectCardProps) {
           <h3 className="text-xl font-bold">{project.title}</h3>
           <div className="text-xs text-gray-500 dark:text-gray-400">
             {(() => {
-              const date = new Date(project.createdAt)
-              const day = date.getDate()
-              const suffix =
-                day === 1 ? 'st' : day === 2 ? 'nd' : day === 3 ? 'rd' : 'th'
-              return (
-                date.toLocaleDateString('en-US', { month: 'long' }) +
-                ' ' +
-                day +
-                suffix
-              )
+              try {
+                const date = new Date(project.createdAt)
+                if (isNaN(date.getTime())) return 'Date unavailable'
+                const day = date.getDate()
+                const suffix =
+                  day === 1 ? 'st' : day === 2 ? 'nd' : day === 3 ? 'rd' : 'th'
+                return (
+                  date.toLocaleDateString('en-US', { month: 'long' }) +
+                  ' ' +
+                  day +
+                  suffix
+                )
+              } catch (e) {
+                return 'Date unavailable'
+              }
             })()}
           </div>
         </div>
