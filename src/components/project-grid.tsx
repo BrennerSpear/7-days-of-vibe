@@ -75,6 +75,7 @@ interface ProjectCardProps {
     link: string
     imageUrl: string
     farcasterUsername: string
+    createdAt: Date
   }
 }
 
@@ -95,7 +96,23 @@ function ProjectCard({ project }: ProjectCardProps) {
         />
       </div>
       <CardContent className="p-5">
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-xl font-bold">{project.title}</h3>
+          <div className="text-xs text-gray-500 dark:text-gray-400">
+            {(() => {
+              const date = new Date(project.createdAt)
+              const day = date.getDate()
+              const suffix =
+                day === 1 ? 'st' : day === 2 ? 'nd' : day === 3 ? 'rd' : 'th'
+              return (
+                date.toLocaleDateString('en-US', { month: 'long' }) +
+                ' ' +
+                day +
+                suffix
+              )
+            })()}
+          </div>
+        </div>
         <p className="text-muted-foreground mb-4 text-sm line-clamp-3">
           {project.description}
         </p>
