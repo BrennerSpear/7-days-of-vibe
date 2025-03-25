@@ -1,12 +1,16 @@
 import { Card, CardContent } from '~/components/ui/card'
 import { api } from '~/utils/api'
 
-export function ProjectGrid() {
+interface ProjectGridProps {
+  weekFilter?: number
+}
+
+export function ProjectGrid({ weekFilter }: ProjectGridProps) {
   const {
     data: projects,
     isLoading,
     error,
-  } = api.project.getApproved.useQuery()
+  } = api.project.getApproved.useQuery({ week: weekFilter })
 
   if (error) {
     return (
