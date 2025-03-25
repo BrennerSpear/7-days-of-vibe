@@ -53,8 +53,8 @@ export function NavBar() {
               Vibe Tools
             </Link>
             <Link
-              href="/prompts"
-              className={`text-sm font-medium ${isActive('/prompts')}`}
+              href="/prompt-ideas"
+              className={`text-sm font-medium ${isActive('/prompt-ideas')}`}
             >
               Prompt Ideas
             </Link>
