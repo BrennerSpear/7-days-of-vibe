@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 
 export function CountdownTimer() {
   // Use useMemo to avoid recreating the date object on every render
-  const targetDate = useMemo(() => new Date('2025-04-01T00:00:00Z'), []) // Set your target date here
+  const targetDate = useMemo(() => new Date('2025-03-31T00:00:00Z'), []) // Set your target date here
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,

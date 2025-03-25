@@ -37,7 +37,7 @@ export default function Home() {
                 <div className="space-y-8">
                   {/* Event Dates */}
                   <h3 className="text-xl font-semibold mb-8 text-center text-purple-700 dark:text-purple-300">
-                    March 17-23, 2025
+                    March 24-30, 2025
                   </h3>
 
                   {/* Challenge Rules */}
