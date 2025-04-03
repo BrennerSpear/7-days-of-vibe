@@ -2,11 +2,18 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { NavBar } from '~/components/nav-bar'
+import { ProjectSubmissionModal } from '~/components/project-form'
 import { ProjectGrid } from '~/components/project-grid'
+import { Button } from '~/components/ui/button'
+import { api } from '~/utils/api'
 
 export default function Showcase() {
   const [activeWeek, setActiveWeek] = useState<number | undefined>(undefined)
   const [availableWeeks, setAvailableWeeks] = useState<number[]>([1, 2])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  // Get tRPC utils for invalidating queries
+  const utils = api.useUtils()
 
   // Update available weeks based on current date
   useEffect(() => {
@@ -17,6 +24,21 @@ export default function Showcase() {
       setAvailableWeeks([1, 2, 3])
     }
   }, [])
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleSubmitSuccess = () => {
+    setIsModalOpen(false)
+    // Invalidate the projects query to refresh the data
+    void utils.project.getApproved.invalidate()
+    // You could also add a toast notification here
+  }
 
   return (
     <>
@@ -32,13 +54,29 @@ export default function Showcase() {
       <div className="min-h-screen flex flex-col">
         <NavBar />
 
+        {/* Project Submission Modal */}
+        <ProjectSubmissionModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onSubmitSuccess={handleSubmitSuccess}
+        />
+
         {/* Main Content */}
         <main className="flex-grow pt-24">
           <div className="container px-4 mx-auto py-16">
             <div className="max-w-4xl mx-auto">
-              <h1 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-300 dark:to-pink-300 bg-clip-text text-transparent">
-                Community Projects
-              </h1>
+              <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+                <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-300 dark:to-pink-300 bg-clip-text text-transparent mb-4 md:mb-0">
+                  Community Projects
+                </h1>
+
+                <Button
+                  onClick={handleOpenModal}
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold"
+                >
+                  Submit Your Project
+                </Button>
+              </div>
 
               {/* Week Tabs */}
               <div className="flex justify-center mb-10">
