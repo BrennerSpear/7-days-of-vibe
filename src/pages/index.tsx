@@ -37,7 +37,26 @@ export default function Home() {
                 <div className="space-y-8">
                   {/* Event Dates */}
                   <h3 className="text-xl font-semibold mb-8 text-center text-purple-700 dark:text-purple-300">
-                    March 24-30, 2025
+                    {(() => {
+                      const today = new Date()
+                      const dayOfWeek = today.getDay() // 0 = Sunday, 1 = Monday, etc.
+                      const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek // If Sunday, go back 6 days, otherwise go back to Monday
+
+                      const monday = new Date(today)
+                      monday.setDate(today.getDate() + mondayOffset)
+
+                      const sunday = new Date(monday)
+                      sunday.setDate(monday.getDate() + 6)
+
+                      const formatDate = (date: Date) => {
+                        return date.toLocaleDateString('en-US', {
+                          month: 'long',
+                          day: 'numeric',
+                        })
+                      }
+
+                      return `${formatDate(monday)}-${formatDate(sunday)}, ${monday.getFullYear()}`
+                    })()}
                   </h3>
 
                   {/* Challenge Rules */}
